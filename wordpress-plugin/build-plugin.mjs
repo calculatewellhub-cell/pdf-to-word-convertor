@@ -43,11 +43,10 @@ const guideParas = html => html.split(/\n+/).map(p => p.trim()).filter(Boolean).
 
 const pages = [];
 for (const t of TOOLS) {
-  const what = t.slug === 'merge-pdf' ? 'multiple PDFs into one' : t.slug === 'split-pdf' ? 'a PDF into separate files' : `${t.from} to ${t.to}`;
   const content = [
     center(t.sub),
     sc(`[cwh_pdf tool="${t.slug}"]`),
-    h2(`How to convert ${what} — quick answer`, 'quick-answer'),
+    h2(`${t.slug === 'merge-pdf' ? 'How to merge PDF files' : t.slug === 'split-pdf' ? 'How to split a PDF' : `How to convert ${t.from} to ${t.to}`} — quick answer`, 'quick-answer'),
     para(t.answer, 'cwhp-answer'),
     h2(`${t.name} in 3 easy steps`, 'how-to'),
     list(t.steps.map(([n, d]) => `<strong>${n}:</strong> ${d}`), true),

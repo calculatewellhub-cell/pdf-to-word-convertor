@@ -2,7 +2,7 @@
 // Generates SEO-optimised HTML pages, sitemap.xml, robots.txt, llms.txt and manifest.
 // Configure your domain with SITE_URL, e.g.  SITE_URL=https://pdf.example.com node build.mjs
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
-import { TOOLS, NAV } from './tools.mjs';
+import { TOOLS, NAV, HOME } from './tools.mjs';
 
 const CONFIG = {
   url: (process.env.SITE_URL || 'https://calculatewellhub-cell.github.io/pdf-to-word-convertor').replace(/\/$/, ''),
@@ -169,16 +169,7 @@ ${footer(root)}
 /* ---------------- Home page (all-in-one) ---------------- */
 {
   const root = './';
-  const title = 'Free PDF Converter – PDF to Word, Excel, JPG & Merge PDF';
-  const desc = 'All-in-one free PDF converter: PDF to Word, Excel, JPG, PNG, Text and Word, Excel, JPG to PDF. Merge & split PDF. No signup, no watermark, files never uploaded.';
-  const homeFaqs = [
-    ['What can this free PDF converter do?', 'It converts PDF to Word (DOCX), Excel (XLSX/CSV), JPG, PNG and Text, converts Word, Excel, images and text files to PDF, and merges or splits PDF files — 12 tools in one place.'],
-    ['Do I need to install software or create an account?', 'No. Everything works directly in your browser on Windows, Mac, Linux, Android and iPhone. There is no signup and no email required.'],
-    ['Are my files safe?', 'Yes. Unlike most online converters, your files are never uploaded. All processing happens locally on your device, so nobody else can access your documents.'],
-    ['Is there a file size or daily limit?', 'There are no daily limits. Files up to 200 MB are supported; the practical limit depends on your device’s memory.'],
-    ['Does it add a watermark?', 'Never. All converted files are clean and ready to use.'],
-    ['Which is the best free PDF to Word converter?', 'A good PDF to Word converter should keep formatting, be free without watermarks and protect your privacy. This tool does all three and works offline once the page is loaded.']
-  ];
+  const { title, desc, faqs: homeFaqs } = HOME;
   const all = TOOLS.map(t => t.slug);
   const graph = {
     '@context': 'https://schema.org',

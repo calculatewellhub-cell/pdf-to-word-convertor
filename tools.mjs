@@ -365,3 +365,16 @@ export const TOOLS = [
 ];
 
 export const NAV = ['pdf-to-word', 'pdf-to-excel', 'pdf-to-jpg', 'word-to-pdf', 'jpg-to-pdf', 'merge-pdf', 'split-pdf'];
+
+export const HOME = {
+  title: 'Free PDF Converter – PDF to Word, Excel, JPG & Merge PDF',
+  desc: 'All-in-one free PDF converter: PDF to Word, Excel, JPG, PNG, Text and Word, Excel, JPG to PDF. Merge & split PDF. No signup, no watermark, files never uploaded.',
+  faqs: [
+    ['What can this free PDF converter do?', 'It converts PDF to Word (DOCX), Excel (XLSX/CSV), JPG, PNG and Text, converts Word, Excel, images and text files to PDF, and merges or splits PDF files — 12 tools in one place.'],
+    ['Do I need to install software or create an account?', 'No. Everything works directly in your browser on Windows, Mac, Linux, Android and iPhone. There is no signup and no email required.'],
+    ['Are my files safe?', 'Yes. Unlike most online converters, your files are never uploaded. All processing happens locally on your device, so nobody else can access your documents.'],
+    ['Is there a file size or daily limit?', 'There are no daily limits. Files up to 200 MB are supported; the practical limit depends on your device’s memory.'],
+    ['Does it add a watermark?', 'Never. All converted files are clean and ready to use.'],
+    ['Which is the best free PDF to Word converter?', 'A good PDF to Word converter should keep formatting, be free without watermarks and protect your privacy. This tool does all three and works offline once the page is loaded.']
+  ]
+};

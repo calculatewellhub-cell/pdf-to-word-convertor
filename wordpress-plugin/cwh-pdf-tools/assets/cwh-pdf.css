@@ -1,0 +1,70 @@
+/* CWH PDF Tools – all rules are scoped to .cwhp so the theme is never affected */
+.cwhp{--c-card:#fff;--c-bg:#f6f7fb;--c-ink:#0f172a;--c-mut:#526077;--c-line:#e3e7ef;--c-brand:#e5322d;--c-brand2:#ff6b3d;--c-ok:#16a34a;--c-soft:#fff1ee;--c-sh:0 1px 2px rgba(15,23,42,.05),0 8px 28px rgba(15,23,42,.08);color:var(--c-ink);line-height:1.6;margin:0 0 2em}
+.cwhp *{box-sizing:border-box}
+.cwhp [hidden]{display:none!important}
+.cwhp-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;margin:0 0 16px!important;padding:0!important;list-style:none!important;font-size:.9rem;color:var(--c-mut);font-weight:600}
+.cwhp-badges li{margin:0!important;list-style:none!important}
+.cwhp-badges li:before{content:"✓ ";color:var(--c-ok)}
+.cwhp #converter{background:var(--c-card);border-radius:16px;box-shadow:var(--c-sh);padding:18px;margin:0 auto;max-width:860px;border:1px solid var(--c-line)}
+.cwhp .drop{border:2px dashed #f2a79f;border-radius:14px;background:var(--c-soft);padding:34px 16px;text-align:center;cursor:pointer;transition:.15s}
+.cwhp .drop:hover,.cwhp .drop.over,.cwhp .drop:focus-visible{border-color:var(--c-brand);outline:none;transform:translateY(-1px)}
+.cwhp .drop input{display:none}
+.cwhp .drop .big{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(90deg,var(--c-brand),var(--c-brand2));color:#fff;font-weight:800;font-size:1.12rem;line-height:1.2;padding:15px 30px;border-radius:12px;box-shadow:0 6px 18px rgba(229,50,45,.35)}
+.cwhp .drop p{margin:12px 0 0;color:var(--c-mut);font-size:.95rem}
+.cwhp .has-files .drop{padding:14px}
+.cwhp .has-files .drop .big{font-size:.95rem;padding:9px 18px;box-shadow:none}
+.cwhp .has-files .drop p{display:none}
+.cwhp .choose{margin:16px 0 0;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.cwhp .choose .lbl{margin:0 6px 0 0;font-weight:700}
+.cwhp .chip{display:inline-block;border:1px solid var(--c-line);background:var(--c-card);color:var(--c-ink);padding:7px 14px;border-radius:999px;font-family:inherit;font-weight:600;font-size:.9rem;line-height:1.3;text-decoration:none;cursor:pointer;margin:0}
+.cwhp .chip:hover,.cwhp .chip:focus{border-color:var(--c-brand);color:var(--c-brand);background:var(--c-card)}
+.cwhp .chip.on,.cwhp .chip[aria-current]{background:var(--c-brand);border-color:var(--c-brand);color:#fff}
+.cwhp .files,.cwhp .outs{list-style:none!important;margin:14px 0 0!important;padding:0!important;display:grid;gap:8px}
+.cwhp .files li,.cwhp .outs li{display:flex;align-items:center;gap:10px;border:1px solid var(--c-line);border-radius:12px;padding:8px 10px;background:var(--c-card);margin:0!important;list-style:none!important}
+.cwhp .files li[draggable=true]{cursor:grab}
+.cwhp .fi{flex:none;width:42px;height:42px;border-radius:9px;display:grid;place-items:center;font-family:inherit;font-weight:800;font-size:.68rem;line-height:1;color:#fff;background:linear-gradient(135deg,var(--c-brand),var(--c-brand2))}
+.cwhp .fn{min-width:0;flex:1;display:flex;flex-direction:column;line-height:1.35}
+.cwhp .fn b{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cwhp .fn small{color:var(--c-mut)}
+.cwhp .ib{flex:none;width:34px;height:34px;padding:0;border-radius:8px;border:1px solid var(--c-line);background:transparent;color:var(--c-mut);cursor:pointer;font-size:1rem;line-height:1}
+.cwhp .ib:hover,.cwhp .ib:focus{color:var(--c-brand);border-color:var(--c-brand);background:transparent}
+.cwhp .opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:16px 0 0;padding:14px;border-radius:12px;background:var(--c-bg)}
+.cwhp .opt label{display:block;font-weight:600;font-size:.88rem;margin:0 0 4px}
+.cwhp .opt.ck{display:flex;align-items:center}
+.cwhp .opt.ck label{font-weight:500;margin:0;display:flex;gap:8px;align-items:center;cursor:pointer}
+.cwhp .opt select,.cwhp .opt input[type=text]{width:100%;max-width:none;font:inherit;font-size:.95rem;padding:9px 10px;border-radius:9px;border:1px solid var(--c-line);background:var(--c-card);color:var(--c-ink);height:auto}
+.cwhp .opt input[type=checkbox]{width:18px;height:18px;margin:0;accent-color:var(--c-brand)}
+.cwhp .btn,.cwhp .go{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:12px;font-family:inherit;font-weight:700;font-size:1rem;line-height:1.2;padding:13px 22px;cursor:pointer;text-decoration:none}
+.cwhp .go{width:100%;margin:16px 0 0;font-size:1.12rem;padding:16px;color:#fff;background:linear-gradient(90deg,var(--c-brand),var(--c-brand2));box-shadow:0 6px 18px rgba(229,50,45,.3)}
+.cwhp .go:hover,.cwhp .go:focus{color:#fff;background:linear-gradient(90deg,#cf2a25,var(--c-brand2))}
+.cwhp .go:disabled{opacity:.7;cursor:progress}
+.cwhp .btn.primary,.cwhp .btn.primary:hover,.cwhp .btn.primary:focus{background:var(--c-ok);color:#fff}
+.cwhp .btn.ghost,.cwhp .btn.ghost:hover,.cwhp .btn.ghost:focus{background:transparent;color:var(--c-ink);border:1px solid var(--c-line)}
+.cwhp .btn.sm{padding:8px 14px;font-size:.9rem;flex:none}
+.cwhp .progress{margin:16px 0 0}
+.cwhp .bar{height:10px;border-radius:99px;background:var(--c-line);overflow:hidden}
+.cwhp .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--c-brand),var(--c-brand2));transition:width .25s}
+.cwhp .status{font-size:.9rem;color:var(--c-mut);margin:6px 0 0}
+.cwhp .error{margin:14px 0 0;padding:10px 12px;border-radius:10px;background:#fee2e2;color:#991b1b;font-weight:600;font-size:.95rem}
+.cwhp .results{margin:18px 0 0;padding:16px;border-radius:14px;border:1px solid #bbf7d0;background:rgba(22,163,74,.06)}
+.cwhp .done{display:flex;gap:12px;align-items:center}
+.cwhp .done h3{margin:0;font-size:1.2rem}
+.cwhp .done p{margin:0;color:var(--c-mut)}
+.cwhp .ok{width:40px;height:40px;border-radius:50%;background:var(--c-ok);color:#fff;display:grid;place-items:center;font-weight:800;font-size:1.2rem;flex:none}
+.cwhp .note{font-size:.88rem;color:var(--c-mut);margin:10px 0 0}
+.cwhp .actions{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 0}
+.cwhp .outs{max-height:420px;overflow:auto}
+.cwhp .outs img{width:42px;height:42px;object-fit:cover;border-radius:8px;border:1px solid var(--c-line);flex:none}
+.cwhp-privacy{text-align:center;font-size:.85rem;color:var(--c-mut);margin:12px 0 0!important}
+.cwhp-tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:20px 0 0}
+.cwhp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.cwhp-card{display:flex;gap:12px;align-items:center;background:var(--c-card);border:1px solid var(--c-line);border-radius:14px;padding:16px;text-decoration:none!important;color:var(--c-ink)!important;transition:.15s}
+.cwhp-card:hover{border-color:var(--c-brand);transform:translateY(-2px);box-shadow:var(--c-sh)}
+.cwhp-card strong{display:block;font-size:1.05rem}
+.cwhp-card small{display:block;color:var(--c-mut);font-size:.9rem;line-height:1.4}
+/* Quick-answer box used in page content: add CSS class "cwhp-answer" to a paragraph */
+.cwhp-answer{background:#fff;border-left:4px solid #e5322d;border-radius:12px;padding:16px 18px!important;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 28px rgba(15,23,42,.08)}
+.wp-block-details.cwhp-faq{border:1px solid #e3e7ef;border-radius:12px;padding:12px 16px;margin:0 0 10px}
+.wp-block-details.cwhp-faq summary{font-weight:700;cursor:pointer}
+@media (max-width:560px){.cwhp #converter{padding:12px}.cwhp .drop{padding:26px 12px}.cwhp .drop .big{padding:13px 20px}}
+@media (prefers-reduced-motion:reduce){.cwhp *{transition:none!important}}

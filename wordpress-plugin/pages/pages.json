@@ -1,0 +1,67 @@
+[
+ {
+  "slug": "pdf-tools",
+  "title": "Free PDF Converter — All Tools in One",
+  "excerpt": "All-in-one free PDF converter: PDF to Word, Excel, JPG, PNG, Text and Word, Excel, JPG to PDF. Merge & split PDF. No signup, no watermark, files never uploaded."
+ },
+ {
+  "slug": "pdf-to-word",
+  "title": "PDF to Word Converter",
+  "excerpt": "Convert PDF to editable Word (DOCX) online for free. Keeps fonts, bold, headings and layout. No signup, no watermark — files never leave your device."
+ },
+ {
+  "slug": "pdf-to-excel",
+  "title": "PDF to Excel Converter",
+  "excerpt": "Convert PDF tables to Excel (XLSX) or CSV online free. Detects rows, columns and numbers automatically. Private, fast, no signup and no watermark."
+ },
+ {
+  "slug": "pdf-to-jpg",
+  "title": "PDF to JPG Converter",
+  "excerpt": "Convert PDF pages to high-quality JPG images online. Choose 96, 150 or 300 DPI, pick pages and download all as ZIP. Free, fast and private."
+ },
+ {
+  "slug": "pdf-to-png",
+  "title": "PDF to PNG Converter",
+  "excerpt": "Convert PDF to PNG images online in lossless quality. Select pages and DPI, download as ZIP. Free, secure, no signup, no watermark."
+ },
+ {
+  "slug": "pdf-to-text",
+  "title": "PDF to Text Converter",
+  "excerpt": "Extract text from PDF online and save it as a TXT file. Keeps line breaks and reading order, supports all languages. Free, instant and private."
+ },
+ {
+  "slug": "word-to-pdf",
+  "title": "Word to PDF Converter",
+  "excerpt": "Convert Word (DOCX) to PDF online free. Keeps headings, lists, tables and images; supports Hindi and all languages. No signup, no watermark, 100% private."
+ },
+ {
+  "slug": "excel-to-pdf",
+  "title": "Excel to PDF Converter",
+  "excerpt": "Convert Excel spreadsheets (XLSX, XLS, CSV) to PDF online. Auto-fit wide tables, repeat header rows, landscape mode. Free, private, no signup."
+ },
+ {
+  "slug": "jpg-to-pdf",
+  "title": "JPG to PDF Converter",
+  "excerpt": "Convert JPG, PNG, WEBP and other images to PDF online free. Reorder photos, choose A4 or fit-to-image pages. No upload, no watermark, works on mobile."
+ },
+ {
+  "slug": "png-to-pdf",
+  "title": "PNG to PDF Converter",
+  "excerpt": "Convert PNG images and screenshots to PDF online. Combine multiple PNGs into one PDF, reorder pages, pick A4 or original size. Free and private."
+ },
+ {
+  "slug": "text-to-pdf",
+  "title": "Text to PDF Converter",
+  "excerpt": "Convert TXT and plain-text files to PDF online. Choose font, size, page size and margins. Supports Hindi and all languages. Free, instant, private."
+ },
+ {
+  "slug": "merge-pdf",
+  "title": "Merge PDF Files",
+  "excerpt": "Merge PDF files online free. Combine multiple PDFs into one document, drag to reorder, no file size limits, no watermark. 100% private — no uploads."
+ },
+ {
+  "slug": "split-pdf",
+  "title": "Split PDF & Extract Pages",
+  "excerpt": "Split PDF online free: separate every page, split by custom ranges, or extract selected pages into a new PDF. Fast, private, no signup or watermark."
+ }
+]

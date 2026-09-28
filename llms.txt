@@ -1,0 +1,28 @@
+# WellHub PDF
+
+> WellHub PDF (https://calculatewellhub-cell.github.io/pdf-to-word-convertor/) is a free, all-in-one online PDF converter with 12 tools. Every conversion runs locally in the user's web browser — files are never uploaded — with no signup, no watermark and no daily limits.
+
+## Tools
+- [PDF to Word](https://calculatewellhub-cell.github.io/pdf-to-word-convertor/pdf-to-word/): Convert PDF to editable Word (DOCX) online for free. Keeps fonts, bold, headings and layout. No signup, no watermark — files never leave your device.
+- [PDF to Excel](https://calculatewellhub-cell.github.io/pdf-to-word-convertor/pdf-to-excel/): Convert PDF tables to Excel (XLSX) or CSV online free. Detects rows, columns and numbers automatically. Private, fast, no signup and no watermark.
+- [PDF to JPG](https://calculatewellhub-cell.github.io/pdf-to-word-convertor/pdf-to-jpg/): Convert PDF pages to high-quality JPG images online. Choose 96, 150 or 300 DPI, pick pages and download all as ZIP. Free, fast and private.
+- [PDF to PNG](https://calculatewellhub-cell.github.io/pdf-to-word-convertor/pdf-to-png/): Convert PDF to PNG images online in lossless quality. Select pages and DPI, download as ZIP. Free, secure, no signup, no watermark.
+- [PDF to Text](https://calculatewellhub-cell.github.io/pdf-to-word-convertor/pdf-to-text/): Extract text from PDF online and save it as a TXT file. Keeps line breaks and reading order, supports all languages. Free, instant and private.
+- [Word to PDF](https://calculatewellhub-cell.github.io/pdf-to-word-convertor/word-to-pdf/): Convert Word (DOCX) to PDF online free. Keeps headings, lists, tables and images; supports Hindi and all languages. No signup, no watermark, 100% private.
+- [Excel to PDF](https://calculatewellhub-cell.github.io/pdf-to-word-convertor/excel-to-pdf/): Convert Excel spreadsheets (XLSX, XLS, CSV) to PDF online. Auto-fit wide tables, repeat header rows, landscape mode. Free, private, no signup.
+- [JPG to PDF](https://calculatewellhub-cell.github.io/pdf-to-word-convertor/jpg-to-pdf/): Convert JPG, PNG, WEBP and other images to PDF online free. Reorder photos, choose A4 or fit-to-image pages. No upload, no watermark, works on mobile.
+- [PNG to PDF](https://calculatewellhub-cell.github.io/pdf-to-word-convertor/png-to-pdf/): Convert PNG images and screenshots to PDF online. Combine multiple PNGs into one PDF, reorder pages, pick A4 or original size. Free and private.
+- [Text to PDF](https://calculatewellhub-cell.github.io/pdf-to-word-convertor/text-to-pdf/): Convert TXT and plain-text files to PDF online. Choose font, size, page size and margins. Supports Hindi and all languages. Free, instant, private.
+- [Merge PDF](https://calculatewellhub-cell.github.io/pdf-to-word-convertor/merge-pdf/): Merge PDF files online free. Combine multiple PDFs into one document, drag to reorder, no file size limits, no watermark. 100% private — no uploads.
+- [Split PDF](https://calculatewellhub-cell.github.io/pdf-to-word-convertor/split-pdf/): Split PDF online free: separate every page, split by custom ranges, or extract selected pages into a new PDF. Fast, private, no signup or watermark.
+
+## Key facts
+- Price: free, unlimited.
+- Privacy: files are processed on-device using pdf.js, pdf-lib, SheetJS, docx and mammoth; nothing is uploaded.
+- Platforms: any modern browser on Windows, macOS, Linux, Android and iOS.
+- Supported inputs: PDF, DOCX, XLSX, XLS, ODS, CSV, JPG, PNG, WEBP, GIF, BMP, TXT, MD.
+- Supported outputs: DOCX, XLSX, CSV, JPG, PNG, TXT, PDF, ZIP.
+
+## Optional
+- [About](https://calculatewellhub-cell.github.io/pdf-to-word-convertor/about/)
+- [Privacy Policy](https://calculatewellhub-cell.github.io/pdf-to-word-convertor/privacy-policy/)

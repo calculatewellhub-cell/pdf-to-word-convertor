@@ -36,10 +36,10 @@
    "icon": "DOC",
    "from": "PDF",
    "to": "Word",
-   "card": "Convert PDF to an editable DOCX file.",
-   "title": "PDF to Word Converter – Free, Editable DOCX Online",
-   "desc": "Convert PDF to editable Word (DOCX) online for free. Keeps fonts, bold, headings and layout. No signup, no watermark — files never leave your device.",
-   "answer": "To convert a PDF to Word for free, upload your PDF above, keep “Editable text” selected and click <b>Convert to DOCX</b>. The tool rebuilds paragraphs, headings, bold/italic text and page sizes into a .docx file that opens in Microsoft Word, Google Docs and LibreOffice. Everything runs inside your browser, so your document is never uploaded.",
+   "card": "Editable DOCX or DOC with real tables.",
+   "title": "PDF to Word Converter – Free, Editable DOCX & DOC Online",
+   "desc": "Convert PDF to editable Word (DOCX or DOC) free. Keeps tables, merged cells, fonts, borders and layout. No signup, no watermark — files never leave your device.",
+   "answer": "To convert a PDF to Word for free, upload your PDF above, choose <b>DOCX</b> (Word 2007 and newer) or <b>DOC</b> (Word 97-2003) and click <b>Convert</b>. The tool rebuilds real Word tables with merged cells and shading, paragraphs, fonts, bold/italic and underlined text, page borders and page numbers, so question papers, forms and reports keep their original layout. Everything runs inside your browser, so your document is never uploaded.",
    "howto": "How to convert PDF to Word",
    "steps": [
     [
@@ -47,30 +47,34 @@
      "Click “Choose files”, drag & drop, or paste a PDF. You can add several PDFs at once."
     ],
     [
-     "Pick a mode",
-     "“Editable text” rebuilds real paragraphs you can edit. “Exact layout” keeps every page pixel-perfect as an image."
+     "Pick DOCX or DOC",
+     "Choose DOCX for Word 2007 and newer, or DOC for old Word 97-2003. Keep “Editable” mode to rebuild tables and text you can edit."
     ],
     [
-     "Download the DOCX",
-     "Click Convert and download your Word file. Open it in Word, Google Docs or WPS."
+     "Download the Word file",
+     "Click Convert and download your file. Open it in Microsoft Word, Google Docs, WPS or LibreOffice."
     ]
    ],
    "features": [
     [
-     "Editable text, not pictures",
-     "Text is reconstructed line by line into proper paragraphs with the original font sizes, bold and italic styles."
+     "Real Word tables",
+     "Table lines in the PDF become real Word tables — merged cells, cell shading and borders included — perfect for question papers, forms and invoices."
     ],
     [
-     "Keeps page size & margins",
-     "A4, Letter or custom-size pages are preserved, including landscape pages."
+     "DOCX and DOC",
+     "Download a modern .docx or an old-style .doc that opens in Word 97, 2003, 2007 and every newer version."
+    ],
+    [
+     "Editable text, not pictures",
+     "Text is rebuilt into proper paragraphs with the original fonts, sizes, bold, italic, underline and tab alignment."
+    ],
+    [
+     "Page layout kept",
+     "Page size, margins, page borders, shaded headings and “Page X of Y” footers are preserved."
     ],
     [
      "Scanned pages handled",
      "Pages without selectable text are inserted as high-resolution images so nothing is lost."
-    ],
-    [
-     "Batch conversion",
-     "Convert multiple PDFs to Word in one go and download them together as a ZIP."
     ]
    ],
    "faqs": [
@@ -80,7 +84,15 @@
     ],
     [
      "Will my Word file keep the original formatting?",
-     "Paragraphs, font sizes, bold, italic, alignment, indentation and page size are kept. Complex magazine layouts with many columns may need small touch-ups; for those, use “Exact layout” mode."
+     "Yes. Tables (including merged cells and shading), fonts, bold, italic, underline, alignment, page borders, margins and page numbers are rebuilt. Very complex magazine layouts may need small touch-ups; for those, use “Exact look” mode."
+    ],
+    [
+     "Can I convert PDF to DOC (Word 97-2003)?",
+     "Yes. Choose “DOC – Word 97-2003” in the Word format option. The .doc file opens in Word 97, 2003 and all newer versions, as well as LibreOffice and WPS."
+    ],
+    [
+     "Will tables in my PDF stay as tables?",
+     "Yes. Tables drawn with lines — like question papers, mark sheets, invoices and forms — are converted into real, editable Word tables with the same rows, columns and merged cells."
     ],
     [
      "Are my files uploaded to a server?",

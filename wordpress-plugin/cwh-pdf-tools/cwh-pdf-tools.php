@@ -2,7 +2,7 @@
 /**
  * Plugin Name: CWH PDF Tools
  * Description: Free, private PDF converter (PDF to Word, Excel, JPG, PNG, Text; Word, Excel, Image, Text to PDF; Merge &amp; Split PDF). Every conversion runs in the visitor's browser, so files are never uploaded. Use the shortcode [cwh_pdf tool="pdf-to-word"] or [cwh_pdf tool="auto"].
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: CalculateWellHub
  * License: GPL-2.0-or-later
  * Requires at least: 6.0
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CWH_PDF_VERSION', '1.0.0' );
+define( 'CWH_PDF_VERSION', '1.1.0' );
 define( 'CWH_PDF_URL', plugin_dir_url( __FILE__ ) );
 define( 'CWH_PDF_DIR', plugin_dir_path( __FILE__ ) );
 

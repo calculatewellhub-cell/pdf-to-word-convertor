@@ -5,29 +5,33 @@ export const TOOLS = [
   {
     slug: 'pdf-to-word', icon: 'DOC', from: 'PDF', to: 'Word',
     name: 'PDF to Word',
-    title: 'PDF to Word Converter – Free, Editable DOCX Online',
-    desc: 'Convert PDF to editable Word (DOCX) online for free. Keeps fonts, bold, headings and layout. No signup, no watermark — files never leave your device.',
+    title: 'PDF to Word Converter – Free, Editable DOCX & DOC Online',
+    desc: 'Convert PDF to editable Word (DOCX or DOC) free. Keeps tables, merged cells, fonts, borders and layout. No signup, no watermark — files never leave your device.',
     h1: 'PDF to <span>Word</span> Converter',
-    sub: 'Turn any PDF into an editable Word document (.docx) in seconds. Free, private and without watermarks.',
-    card: 'Convert PDF to an editable DOCX file.',
-    answer: 'To convert a PDF to Word for free, upload your PDF above, keep “Editable text” selected and click <b>Convert to DOCX</b>. The tool rebuilds paragraphs, headings, bold/italic text and page sizes into a .docx file that opens in Microsoft Word, Google Docs and LibreOffice. Everything runs inside your browser, so your document is never uploaded.',
+    sub: 'Turn any PDF into an editable Word document (.docx or .doc) with real tables and the original layout. Free, private and without watermarks.',
+    card: 'Editable DOCX or DOC with real tables.',
+    answer: 'To convert a PDF to Word for free, upload your PDF above, choose <b>DOCX</b> (Word 2007 and newer) or <b>DOC</b> (Word 97-2003) and click <b>Convert</b>. The tool rebuilds real Word tables with merged cells and shading, paragraphs, fonts, bold/italic and underlined text, page borders and page numbers, so question papers, forms and reports keep their original layout. Everything runs inside your browser, so your document is never uploaded.',
     steps: [
       ['Upload your PDF', 'Click “Choose files”, drag & drop, or paste a PDF. You can add several PDFs at once.'],
-      ['Pick a mode', '“Editable text” rebuilds real paragraphs you can edit. “Exact layout” keeps every page pixel-perfect as an image.'],
-      ['Download the DOCX', 'Click Convert and download your Word file. Open it in Word, Google Docs or WPS.']
+      ['Pick DOCX or DOC', 'Choose DOCX for Word 2007 and newer, or DOC for old Word 97-2003. Keep “Editable” mode to rebuild tables and text you can edit.'],
+      ['Download the Word file', 'Click Convert and download your file. Open it in Microsoft Word, Google Docs, WPS or LibreOffice.']
     ],
     features: [
-      ['Editable text, not pictures', 'Text is reconstructed line by line into proper paragraphs with the original font sizes, bold and italic styles.'],
-      ['Keeps page size & margins', 'A4, Letter or custom-size pages are preserved, including landscape pages.'],
-      ['Scanned pages handled', 'Pages without selectable text are inserted as high-resolution images so nothing is lost.'],
-      ['Batch conversion', 'Convert multiple PDFs to Word in one go and download them together as a ZIP.']
+      ['Real Word tables', 'Table lines in the PDF become real Word tables — merged cells, cell shading and borders included — perfect for question papers, forms and invoices.'],
+      ['DOCX and DOC', 'Download a modern .docx or an old-style .doc that opens in Word 97, 2003, 2007 and every newer version.'],
+      ['Editable text, not pictures', 'Text is rebuilt into proper paragraphs with the original fonts, sizes, bold, italic, underline and tab alignment.'],
+      ['Page layout kept', 'Page size, margins, page borders, shaded headings and “Page X of Y” footers are preserved.'],
+      ['Scanned pages handled', 'Pages without selectable text are inserted as high-resolution images so nothing is lost.']
     ],
-    guide: `<p>PDF is perfect for sharing, but painful to edit. This PDF to Word converter reads the text layer of your PDF, groups characters into lines and lines into paragraphs, and detects headings, bullet lists, centered titles and indentation. The result is a clean <strong>.docx</strong> file where you can fix a typo, rewrite a paragraph or reuse content without retyping.</p>
-<p><strong>Which mode should I choose?</strong> Use <em>Editable text</em> for reports, letters, resumes, agreements and e-books. Use <em>Exact layout</em> for brochures, certificates and designed flyers where the look matters more than editing — each page is placed in Word as a sharp image.</p>
+    guide: `<p>PDF is perfect for sharing, but painful to edit. This PDF to Word converter reads both the text and the drawn lines of your PDF. Lines that form a grid become a <strong>real Word table</strong> with merged cells and shading; the remaining text is rebuilt into paragraphs with the original fonts, alignment, tab stops and spacing. The result is a clean Word file where you can fix a typo, rewrite a question or reuse content without retyping.</p>
+<p><strong>DOCX or DOC?</strong> Choose <em>DOCX</em> for Microsoft Word 2007 and newer, Google Docs and WPS — it is the modern standard. Choose <em>DOC</em> only if you must open the file in Word 97-2003 or an old office program.</p>
+<p><strong>Which mode should I choose?</strong> Use <em>Editable</em> for question papers, reports, letters, resumes, forms and agreements. Use <em>Exact layout</em> for brochures, certificates and designed flyers where the look matters more than editing — each page is placed in Word as a sharp image.</p>
 <p><strong>Tip for scanned PDFs:</strong> a scanned document is a photo of paper and has no real text. Such pages are kept as images. To extract words from a scan you need OCR software; for everything else this converter is instant.</p>`,
     faqs: [
       ['Is this PDF to Word converter really free?', 'Yes. It is 100% free with no signup, no daily limit and no watermark on your documents.'],
-      ['Will my Word file keep the original formatting?', 'Paragraphs, font sizes, bold, italic, alignment, indentation and page size are kept. Complex magazine layouts with many columns may need small touch-ups; for those, use “Exact layout” mode.'],
+      ['Will my Word file keep the original formatting?', 'Yes. Tables (including merged cells and shading), fonts, bold, italic, underline, alignment, page borders, margins and page numbers are rebuilt. Very complex magazine layouts may need small touch-ups; for those, use “Exact look” mode.'],
+      ['Can I convert PDF to DOC (Word 97-2003)?', 'Yes. Choose “DOC – Word 97-2003” in the Word format option. The .doc file opens in Word 97, 2003 and all newer versions, as well as LibreOffice and WPS.'],
+      ['Will tables in my PDF stay as tables?', 'Yes. Tables drawn with lines — like question papers, mark sheets, invoices and forms — are converted into real, editable Word tables with the same rows, columns and merged cells.'],
       ['Are my files uploaded to a server?', 'No. The conversion runs entirely in your web browser using JavaScript. Your PDF never leaves your computer or phone, which makes it safe for confidential documents.'],
       ['Can I convert a PDF to Word on my mobile phone?', 'Yes. The tool works in Chrome, Safari, Edge and Firefox on Android and iPhone — no app needed.'],
       ['Does it work with Hindi and other languages?', 'Yes. Any language that is stored as real text in the PDF (Hindi, Marathi, Tamil, Arabic, Chinese and more) is copied into the Word file as editable Unicode text.'],

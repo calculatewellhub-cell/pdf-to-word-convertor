@@ -3,7 +3,7 @@
 > WellHub PDF (https://calculatewellhub-cell.github.io/pdf-to-word-convertor/) is a free, all-in-one online PDF converter with 12 tools. Every conversion runs locally in the user's web browser — files are never uploaded — with no signup, no watermark and no daily limits.
 
 ## Tools
-- [PDF to Word](https://calculatewellhub-cell.github.io/pdf-to-word-convertor/pdf-to-word/): Convert PDF to editable Word (DOCX) online for free. Keeps fonts, bold, headings and layout. No signup, no watermark — files never leave your device.
+- [PDF to Word](https://calculatewellhub-cell.github.io/pdf-to-word-convertor/pdf-to-word/): Convert PDF to editable Word (DOCX or DOC) free. Keeps tables, merged cells, fonts, borders and layout. No signup, no watermark — files never leave your device.
 - [PDF to Excel](https://calculatewellhub-cell.github.io/pdf-to-word-convertor/pdf-to-excel/): Convert PDF tables to Excel (XLSX) or CSV online free. Detects rows, columns and numbers automatically. Private, fast, no signup and no watermark.
 - [PDF to JPG](https://calculatewellhub-cell.github.io/pdf-to-word-convertor/pdf-to-jpg/): Convert PDF pages to high-quality JPG images online. Choose 96, 150 or 300 DPI, pick pages and download all as ZIP. Free, fast and private.
 - [PDF to PNG](https://calculatewellhub-cell.github.io/pdf-to-word-convertor/pdf-to-png/): Convert PDF to PNG images online in lossless quality. Select pages and DPI, download as ZIP. Free, secure, no signup, no watermark.

@@ -20,7 +20,8 @@
     xlsx: { src: 'xlsx.full.min.js', global: 'XLSX' },
     mammoth: { src: 'mammoth.browser.min.js', global: 'mammoth' },
     h2c: { src: 'html2canvas.min.js', global: 'html2canvas' },
-    jszip: { src: 'jszip.min.js', global: 'JSZip' }
+    jszip: { src: 'jszip.min.js', global: 'JSZip' },
+    p2w: { src: 'cwh-pdf2word.js', global: 'CWHPdf2Word' }
   };
   var loading = {};
   function load(name) {
@@ -113,25 +114,34 @@
     return page.render({ canvasContext: ctx, viewport: vp }).promise.then(function () { return c; });
   }
 
-  /* Reconstruct lines, styled runs and table-like cells from positioned text. */
-  function extractLines(page) {
+  /* Font family from an embedded font name, e.g. "BCDEEE+Calibri-Bold" -> "Calibri". */
+  function fontFamily(n) {
+    n = (n || '').replace(/^[A-Z]{6}\+/, '').split(/[-,]/)[0].replace(/(PSMT|PS|MT)$/, '');
+    if (!n || /^(F|TT|T|C)\d+$/i.test(n)) return null;
+    if (!/\s/.test(n)) n = n.replace(/([a-z])([A-Z])/g, '$1 $2');
+    return n;
+  }
+
+  /* Positioned text items (+ operator list) of a page. */
+  function getItems(page) {
     var lib = window.pdfjsLib;
     var vp = page.getViewport({ scale: 1 });
-    var fonts = {};
+    var fonts = {}, opList = null;
     function fontInfo(name) {
       if (fonts[name]) return fonts[name];
-      var info = { bold: false, italic: false };
+      var info = { bold: false, italic: false, family: null };
       try {
         if (page.commonObjs.has(name)) {
           var f = page.commonObjs.get(name), n = (f && f.name) || '';
           info.bold = !!(f && (f.bold || f.black)) || /bold|black|heavy|semibold|demi/i.test(n);
           info.italic = !!(f && f.italic) || /italic|oblique/i.test(n);
+          info.family = fontFamily(n);
         }
       } catch (e) { /* font info unavailable */ }
       return (fonts[name] = info);
     }
-    // Operator list resolves fonts so bold/italic can be detected.
-    return page.getOperatorList().catch(function () {}).then(function () {
+    // The operator list resolves fonts (bold/italic/family) and carries the vector graphics.
+    return page.getOperatorList().then(function (ol) { opList = ol; }, function () {}).then(function () {
       return page.getTextContent();
     }).then(function (tc) {
       var items = [];
@@ -139,153 +149,96 @@
         if (!it.str || !it.str.trim()) return;
         var t = lib.Util.transform(vp.transform, it.transform);
         var size = Math.hypot(t[2], t[3]) || it.height || 10;
-        var w = it.width * (vp.scale || 1);
-        items.push({ str: it.str.replace(/\s+/g, ' '), x: t[4], y: t[5], w: w, size: size, font: fontInfo(it.fontName) });
+        items.push({ str: it.str.replace(/\s+/g, ' '), x: t[4], y: t[5], w: it.width * (vp.scale || 1), size: size, font: fontInfo(it.fontName) });
       });
-      items.sort(function (a, b) { return a.y - b.y || a.x - b.x; });
-
-      var lines = [];
-      items.forEach(function (it) {
-        var last = lines[lines.length - 1];
-        if (last && Math.abs(last.y - it.y) <= Math.max(2, Math.min(last.size, it.size) * 0.45)) last.items.push(it);
-        else lines.push({ y: it.y, size: it.size, items: [it] });
-      });
-
-      lines.forEach(function (line) {
-        line.items.sort(function (a, b) { return a.x - b.x; });
-        var runs = [], cells = [], text = '', prevEnd = null, sizes = {};
-        line.items.forEach(function (it) {
-          var s = it.str, tab = false;
-          if (prevEnd !== null) {
-            var gap = it.x - prevEnd;
-            if (gap > it.size * 0.8) { cells.push({ x: it.x, end: it.x, text: '' }); if (gap > it.size * 1.6) tab = true; }
-            else if (gap > it.size * 0.15 && !/\s$/.test(text) && !/^\s/.test(s)) s = ' ' + s;
-          } else cells.push({ x: it.x, end: it.x, text: '' });
-          var cell = cells[cells.length - 1];
-          cell.text += cell.text ? s : s.replace(/^\s+/, '');
-          cell.end = Math.max(cell.end, it.x + it.w);
-          if (tab) { runs.push({ tab: true }); s = s.replace(/^\s+/, ''); text += '\t'; }
-          text += s;
-          var prev = runs[runs.length - 1];
-          if (prev && !prev.tab && prev.bold === it.font.bold && prev.italic === it.font.italic && Math.abs(prev.size - it.size) < 0.6) prev.text += s;
-          else runs.push({ text: s, bold: it.font.bold, italic: it.font.italic, size: it.size });
-          sizes[Math.round(it.size * 2) / 2] = (sizes[Math.round(it.size * 2) / 2] || 0) + s.length;
-          prevEnd = Math.max(prevEnd === null ? -Infinity : prevEnd, it.x + it.w);
-        });
-        var best = 0;
-        Object.keys(sizes).forEach(function (k) { if (sizes[k] > (sizes[best] || 0)) best = k; });
-        line.size = +best || line.size;
-        line.x = line.items[0].x;
-        line.end = prevEnd;
-        line.text = text;
-        line.runs = runs;
-        line.cells = cells.map(function (c) { c.text = c.text.trim(); return c; });
-      });
-      return { lines: lines, width: vp.width, height: vp.height };
+      return { items: items, opList: opList || { fnArray: [], argsArray: [] }, vp: vp };
     });
+  }
+
+  /* Reconstruct lines, styled runs, tab stops and table-like cells from positioned text. */
+  function groupLines(items) {
+    items = items.slice().sort(function (a, b) { return a.y - b.y || a.x - b.x; });
+    var lines = [];
+    items.forEach(function (it) {
+      var last = lines[lines.length - 1];
+      if (last && Math.abs(last.y - it.y) <= Math.max(2, Math.min(last.size, it.size) * 0.45)) last.items.push(it);
+      else lines.push({ y: it.y, size: it.size, items: [it] });
+    });
+    lines.forEach(function (line) {
+      line.items.sort(function (a, b) { return a.x - b.x; });
+      var runs = [], cells = [], tabs = [], text = '', prevEnd = null, sizes = {};
+      line.items.forEach(function (it) {
+        var s = it.str, tab = false;
+        if (prevEnd !== null) {
+          var gap = it.x - prevEnd;
+          if (gap > it.size * 0.8) { cells.push({ x: it.x, end: it.x, text: '' }); tab = true; }
+          else if (gap > it.size * 0.2 && /^\s*(\d{1,3}|[ivxlc]{1,5}|[a-zA-Z])[.)]$/i.test(text)) tab = true; // list marker: "1." "iv." "a)"
+          else if (gap > it.size * 0.15 && !/\s$/.test(text) && !/^\s/.test(s)) s = ' ' + s;
+        } else cells.push({ x: it.x, end: it.x, text: '' });
+        var cell = cells[cells.length - 1];
+        cell.text += cell.text ? s : s.replace(/^\s+/, '');
+        cell.end = Math.max(cell.end, it.x + it.w);
+        if (tab) { runs.push({ tab: true }); tabs.push({ x: it.x }); s = s.replace(/^\s+/, ''); text += '\t'; }
+        text += s;
+        var f = it.font, prev = runs[runs.length - 1];
+        if (prev && !prev.tab && prev.bold === f.bold && prev.italic === f.italic && prev.family === f.family && Math.abs(prev.size - it.size) < 0.6) prev.text += s;
+        else runs.push({ text: s, bold: f.bold, italic: f.italic, family: f.family, size: it.size });
+        sizes[Math.round(it.size * 2) / 2] = (sizes[Math.round(it.size * 2) / 2] || 0) + s.length;
+        prevEnd = Math.max(prevEnd === null ? -Infinity : prevEnd, it.x + it.w);
+      });
+      var best = 0;
+      Object.keys(sizes).forEach(function (k) { if (sizes[k] > (sizes[best] || 0)) best = k; });
+      line.size = +best || line.size;
+      line.x = line.items[0].x;
+      line.end = prevEnd;
+      line.text = text;
+      line.runs = runs;
+      line.tabs = tabs;
+      line.cells = cells.map(function (c) { c.text = c.text.trim(); return c; });
+    });
+    return lines;
+  }
+
+  function extractLines(page) {
+    return getItems(page).then(function (r) { return { lines: groupLines(r.items), width: r.vp.width, height: r.vp.height }; });
   }
 
   /* ------------------------------------------------------------------ *
    * PDF -> Word (.docx)
    * ------------------------------------------------------------------ */
-  var BULLET = /^\s*([•●○◦▪■□►▸\-–—*]|\(?\d{1,3}[.)]|\(?[a-zA-Z][.)]|[ivxIVX]{1,4}[.)])\s/;
+  var P2W_UTILS = { getItems: getItems, groupLines: groupLines, renderPage: renderPage, canvasBlob: canvasBlob };
 
-  function pageProps(D, vp, margins) {
-    var W = Math.round(vp.width * 20), H = Math.round(vp.height * 20);
-    var size = W > H ? { width: H, height: W, orientation: D.PageOrientation.LANDSCAPE } : { width: W, height: H };
-    return { page: { size: size, margin: margins } };
-  }
-
-  function linesToParagraphs(D, data) {
-    var lines = data.lines;
-    var body = median(lines.map(function (l) { return l.size; })) || 11;
-    var minX = Math.min.apply(null, lines.map(function (l) { return l.x; }));
-    var maxEnd = Math.max.apply(null, lines.map(function (l) { return l.end; }));
-    var mL = Math.min(Math.max(minX, 18), 108), mR = Math.min(Math.max(data.width - maxEnd, 18), 108);
-    var mT = Math.min(Math.max(lines[0].y - lines[0].size * 1.2, 18), 108);
-    var contentW = data.width - mL - mR;
-
-    var paras = [], cur = null, prev = null;
-    lines.forEach(function (line) {
-      var gap = prev ? line.y - prev.y : 0;
-      var sameSize = prev && Math.abs(line.size - prev.size) < 1;
-      var cont = cur && sameSize && gap > 0 && gap < line.size * 1.75 &&
-        line.x < cur.x + line.size * 2.5 && line.x > cur.x - line.size * 3 &&
-        !BULLET.test(line.text) && line.text.indexOf('\t') < 0 && prev.text.indexOf('\t') < 0 &&
-        prev.end > data.width - mR - line.size * 8; // previous line reached the right edge => wrapped text
-      if (cont) {
-        var lastRun = cur.runs[cur.runs.length - 1];
-        if (lastRun && !lastRun.tab && /[a-z]-$/.test(lastRun.text) && /^[a-z]/.test(line.text)) lastRun.text = lastRun.text.slice(0, -1);
-        else if (lastRun && !lastRun.tab) lastRun.text += ' ';
-        cur.runs = cur.runs.concat(line.runs.map(function (r) { return Object.assign({}, r); }));
-        cur.lines++;
-        cur.end = Math.max(cur.end, line.end);
-      } else {
-        var extra = prev ? gap - Math.max(prev.size, line.size) * 1.25 : 0;
-        cur = { x: line.x, end: line.end, size: line.size, runs: line.runs.map(function (r) { return Object.assign({}, r); }), lines: 1, before: Math.max(0, Math.min(extra, 48)) };
-        paras.push(cur);
-      }
-      prev = line;
-    });
-
-    var children = paras.map(function (p) {
-      var align, indent = Math.max(0, p.x - mL);
-      var center = (p.x + p.end) / 2, mid = mL + contentW / 2;
-      if (p.lines === 1 && indent > 24 && Math.abs(center - mid) < contentW * 0.04) { align = D.AlignmentType.CENTER; indent = 0; }
-      else if (p.lines === 1 && p.x > mid && Math.abs(p.end - (data.width - mR)) < 12) { align = D.AlignmentType.RIGHT; indent = 0; }
-      var isHeading = p.size >= body * 1.3 && p.lines <= 3;
-      return new D.Paragraph({
-        alignment: align,
-        indent: indent ? { left: Math.round(indent * 20) } : undefined,
-        spacing: { before: Math.round(p.before * 20), after: isHeading ? 120 : 60 },
-        keepNext: isHeading || undefined,
-        children: p.runs.map(function (r) {
-          if (r.tab) return new D.TextRun({ children: [new D.Tab()] });
-          return new D.TextRun({ text: r.text, bold: r.bold || undefined, italics: r.italic || undefined, size: Math.max(8, Math.round(r.size * 2)) });
-        })
-      });
-    });
-    return { children: children, margins: { top: Math.round(mT * 20), bottom: 720, left: Math.round(mL * 20), right: Math.round(mR * 20) } };
-  }
-
-  function imageSection(D, page, vp) {
-    return renderPage(page, 2).then(function (c) { return canvasBlob(c, 'image/jpeg', 0.9); }).then(function (b) { return b.arrayBuffer(); }).then(function (buf) {
-      var k = 96 / 72 * 0.985;
-      return {
-        properties: pageProps(D, vp, { top: 0, right: 0, bottom: 0, left: 0, header: 0, footer: 0 }),
-        children: [new D.Paragraph({ alignment: D.AlignmentType.CENTER, spacing: { before: 0, after: 0 }, children: [new D.ImageRun({ data: buf, transformation: { width: Math.round(vp.width * k), height: Math.round(vp.height * k) } })] })]
-      };
-    });
-  }
-
+  // Rebuilds tables, merged cells, shading, borders, headers/footers and pictures
+  // (see assets/vendor/cwh-pdf2word.js) and writes DOCX or Word 97-2003 DOC.
   async function pdfToWord(file, o, ctx) {
-    var D = await load('docx');
+    var asDoc = o.format === 'doc';
+    var libs = await Promise.all([load('p2w'), asDoc ? null : load('docx')]);
+    var P = libs[0], D = libs[1];
     var pdf = await openPdf(file);
     var pages = pickPages(o.pages, pdf.numPages);
-    var sections = [], scanned = 0;
+    var models = [], scanned = 0;
     for (var i = 0; i < pages.length; i++) {
-      ctx.progress(i / pages.length, 'Converting page ' + pages[i] + ' of ' + pdf.numPages + '…');
+      ctx.progress(i / pages.length, 'Rebuilding page ' + pages[i] + ' of ' + pdf.numPages + '…');
       var page = await pdf.getPage(pages[i]);
       var vp = page.getViewport({ scale: 1 });
-      var data = o.mode === 'layout' ? null : await extractLines(page);
-      if (!data || !data.lines.length) {
-        if (data) scanned++;
-        sections.push(await imageSection(D, page, vp));
-      } else {
-        var r = linesToParagraphs(D, data);
-        sections.push({ properties: pageProps(D, vp, r.margins), children: r.children });
-      }
+      var m = o.mode === 'layout' ? null : await P.buildPage(page, window.pdfjsLib, P2W_UTILS);
+      if (!m) {
+        if (o.mode !== 'layout') scanned++;
+        var c = await renderPage(page, 2);
+        var data = new Uint8Array(await (await canvasBlob(c, 'image/jpeg', 0.9)).arrayBuffer());
+        models.push({ w: vp.width, h: vp.height, full: data, px: [c.width, c.height] });
+        c.width = c.height = 0;
+      } else models.push(m);
       page.cleanup();
       await tick();
     }
-    if (scanned) ctx.note(scanned + ' page(s) had no selectable text (scanned image) and were added as pictures.');
-    var doc = new D.Document({
-      creator: 'PDF Converter', title: baseName(file.name),
-      styles: { default: { document: { run: { font: 'Calibri' } } } },
-      sections: sections
-    });
-    var blob = await D.Packer.toBlob(doc);
     await pdf.destroy();
+    if (scanned) ctx.note(scanned + ' page(s) had no selectable text (scanned image) and were added as pictures.');
+    ctx.progress(0.98, 'Writing Word file…');
+    if (asDoc) {
+      return [{ name: baseName(file.name) + '.doc', blob: new Blob([P.toRtf(models)], { type: 'application/msword' }) }];
+    }
+    var blob = await D.Packer.toBlob(P.toDocx(D, models, { title: baseName(file.name), creator: 'PDF Converter' }));
     return [{ name: baseName(file.name) + '.docx', blob: blob }];
   }
 
@@ -723,7 +676,8 @@
 
   var TOOLS = {
     'pdf-to-word': { label: 'PDF to Word', out: 'DOCX', accept: PDF_ACCEPT, perFile: true, run: pdfToWord, options: [
-      { id: 'mode', type: 'select', label: 'Conversion mode', choices: [['text', 'Editable text (recommended)'], ['layout', 'Exact layout (pages as images)']] }, OPT_PAGES] },
+      { id: 'format', type: 'select', label: 'Word format', choices: [['docx', 'DOCX – Word 2007 & newer (recommended)'], ['doc', 'DOC – Word 97-2003']] },
+      { id: 'mode', type: 'select', label: 'Conversion mode', choices: [['text', 'Editable (tables & layout rebuilt)'], ['layout', 'Exact look (pages as images)']] }, OPT_PAGES] },
     'pdf-to-excel': { label: 'PDF to Excel', out: 'XLSX', accept: PDF_ACCEPT, perFile: true, run: pdfToExcel, options: [
       { id: 'sheets', type: 'select', label: 'Worksheets', choices: [['page', 'One sheet per page'], ['single', 'All pages in one sheet']] },
       { id: 'format', type: 'select', label: 'Format', choices: [['xlsx', 'Excel (.xlsx)'], ['csv', 'CSV (.csv)']] }, OPT_PAGES] },
@@ -831,7 +785,7 @@
   function prefetch() {
     var t = state.tool;
     if (!t || !state.files.length) return;
-    var need = /^pdf-to|split/.test(t) ? (t === 'pdf-to-word' ? ['pdfjs', 'docx'] : t === 'pdf-to-excel' ? ['pdfjs', 'xlsx'] : t === 'split-pdf' ? ['pdflib'] : ['pdfjs'])
+    var need = /^pdf-to|split/.test(t) ? (t === 'pdf-to-word' ? ['pdfjs', 'docx', 'p2w'] : t === 'pdf-to-excel' ? ['pdfjs', 'xlsx'] : t === 'split-pdf' ? ['pdflib'] : ['pdfjs'])
       : t === 'merge-pdf' || /image|jpg|png/.test(t) ? ['pdflib']
       : t === 'word-to-pdf' ? ['mammoth', 'h2c', 'pdflib'] : t === 'excel-to-pdf' ? ['xlsx', 'h2c', 'pdflib'] : ['h2c', 'pdflib'];
     need.forEach(function (n) { load(n).catch(function () {}); });
@@ -908,7 +862,8 @@
     var t = tool();
     el.go.hidden = !state.files.length || !t;
     el.go.disabled = state.busy;
-    if (t) el.go.textContent = state.busy ? 'Converting…' : (t.label.indexOf('to') > 0 ? 'Convert to ' + t.out : t.label) + ' →';
+    var out = state.tool === 'pdf-to-word' && state.opts.format === 'doc' ? 'DOC' : t && t.out;
+    if (t) el.go.textContent = state.busy ? 'Converting…' : (t.label.indexOf('to') > 0 ? 'Convert to ' + out : t.label) + ' →';
     root.classList.toggle('has-files', state.files.length > 0);
   }
 
@@ -1058,7 +1013,7 @@
   el.opts.addEventListener('change', function (e) {
     var id = e.target.dataset.opt; if (!id) return;
     state.opts[id] = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
-    if (e.target.tagName === 'SELECT') renderOptions();
+    if (e.target.tagName === 'SELECT') { render(); var again = document.getElementById(e.target.id); if (again) again.focus(); }
   });
   el.opts.addEventListener('input', function (e) { var id = e.target.dataset.opt; if (id && e.target.type === 'text') state.opts[id] = e.target.value; });
   el.go.addEventListener('click', convert);

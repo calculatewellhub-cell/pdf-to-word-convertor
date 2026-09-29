@@ -25,7 +25,7 @@ export const TOOLS = [
     ],
     guide: `<p>PDF is perfect for sharing, but painful to edit. This PDF to Word converter reads both the text and the drawn lines of your PDF. Lines that form a grid become a <strong>real Word table</strong> with merged cells and shading; the remaining text is rebuilt into paragraphs with the original fonts, alignment, tab stops and spacing. The result is a clean Word file where you can fix a typo, rewrite a question or reuse content without retyping.</p>
 <p><strong>DOCX or DOC?</strong> Choose <em>DOCX</em> for Microsoft Word 2007 and newer, Google Docs and WPS — it is the modern standard. Choose <em>DOC</em> only if you must open the file in Word 97-2003 or an old office program.</p>
-<p><strong>Which mode should I choose?</strong> Use <em>Editable</em> for question papers, reports, letters, resumes, forms and agreements. Use <em>Exact layout</em> for brochures, certificates and designed flyers where the look matters more than editing — each page is placed in Word as a sharp image.</p>
+<p><strong>Which mode should I choose?</strong> Use <em>Editable</em> for question papers, reports, letters, resumes, forms and agreements. Use <em>Exact look</em> for brochures, certificates and designed flyers where the look matters more than editing — each page is placed in Word as a sharp image.</p>
 <p><strong>Tip for scanned PDFs:</strong> a scanned document is a photo of paper and has no real text. Such pages are kept as images. To extract words from a scan you need OCR software; for everything else this converter is instant.</p>`,
     faqs: [
       ['Is this PDF to Word converter really free?', 'Yes. It is 100% free with no signup, no daily limit and no watermark on your documents.'],
